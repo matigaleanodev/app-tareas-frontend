@@ -1,0 +1,16 @@
+@if(mostrar()) {
+<div
+  class="fixed inset-0 flex items-center justify-center z-50 bg-black/40"
+  role="status"
+  aria-live="polite"
+>
+  <div
+    class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center gap-4"
+  >
+    <span
+      class="animate-spin rounded-full border-4 border-blue-500 border-t-transparent w-12 h-12"
+    ></span>
+    <p class="text-gray-700 text-sm text-center">{{ texto() }}</p>
+  </div>
+</div>
+}
