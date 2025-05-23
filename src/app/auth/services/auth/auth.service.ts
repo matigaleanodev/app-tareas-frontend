@@ -3,7 +3,7 @@ import { UserService } from '../user/user.service';
 import { LocalStorageService } from '@shared/services/local-storage/local-storage.service';
 
 import { FirebaseService } from '../firebase/firebase.service';
-import { StoredUser, User } from '@shared/models/user.model';
+import { StoredUser } from '@shared/models/user.model';
 import { from, map } from 'rxjs';
 @Injectable({
   providedIn: 'root',
