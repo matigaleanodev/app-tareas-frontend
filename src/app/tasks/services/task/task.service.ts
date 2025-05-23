@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Task } from '@shared/models/task.model';
+import { CreateTask, Task } from '@shared/models/task.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -19,12 +19,12 @@ export class TaskService {
     return this._http.get<Task>(`${this._api}/tasks/${id}`);
   }
 
-  createTask(task: Task): Observable<Task> {
+  createTask(task: CreateTask): Observable<Task> {
     return this._http.post<Task>(`${this._api}/tasks`, task);
   }
 
-  updateTask(id: string, task: Partial<Task>): Observable<Task> {
-    return this._http.put<Task>(`${this._api}/tasks/${id}`, task);
+  updateTask(task: Partial<Task>): Observable<Task> {
+    return this._http.put<Task>(`${this._api}/tasks/${task.id}`, task);
   }
 
   deleteTask(id: string): Observable<Task> {
