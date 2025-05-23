@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { CreateTask, Task } from '@shared/models/task.model';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,7 +12,16 @@ export class TaskService {
   private _api = environment.API;
 
   getAll(): Observable<Task[]> {
-    return this._http.get<Task[]>(`${this._api}/tasks`);
+    return this._http
+      .get<Task[]>(`${this._api}/tasks`)
+      .pipe(
+        map((tasks) =>
+          tasks.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        )
+      );
   }
 
   getTaskById(id: string): Observable<Task> {

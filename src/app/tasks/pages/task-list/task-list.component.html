@@ -1,77 +1,94 @@
-<div class="max-w-6xl mx-auto">
-  <h1 class="text-2xl font-bold mb-2">Mis tareas</h1>
-  <div class="flex justify-end items-center mb-6 gap-2">
-    <button
-      (click)="onNewTask()"
-      class="min-w-[120px] flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"
-    >
-      Crear tarea
-    </button>
-    <button
-      (click)="logout()"
-      class="min-w-[120px] flex items-center justify-center gap-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 cursor-pointer"
-    >
-      Desconectarse
-    </button>
-  </div>
-  @if (mostrarFormulario()) {
-  <div class="max-w-4xl mx-auto rounded-lg mb-6">
-    <app-task-form
-      [task]="selectedTask()"
-      (createTask)="onCreateTask($event)"
-      (updateTask)="onUpdateTask($event)"
-      (cancelar)="onCancel()"
-    ></app-task-form>
-  </div>
-  }@else{
-  <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+@if (mostrarFormulario()) {
+<div class="max-w-4xl mx-auto rounded-lg mb-6">
+  <app-task-form
+    [task]="selectedTask()"
+    (createTask)="onCreateTask($event)"
+    (updateTask)="onUpdateTask($event)"
+    (cancelar)="onCancel()"
+  ></app-task-form>
+</div>
+}@else{
+<div class="flex justify-end items-center mb-6 gap-2">
+  <button
+    (click)="onNewTask()"
+    class="min-w-[120px] flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"
   >
-    <!-- acá va la lista de tareas -->
-  </div>
-  <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+    Crear tarea
+  </button>
+  <button
+    (click)="onReload()"
+    class="min-w-[120px] flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"
   >
-    @for (task of tasks.value(); track $index) {
-    <!-- ✅ Card de tarea -->
-    <div class="bg-white rounded shadow p-4 flex flex-col justify-between">
-      <!-- Header -->
-      <div class="flex justify-between items-start mb-2">
-        <h2 class="text-lg font-semibold">{{ task.title }}</h2>
-        <div class="flex gap-2">
-          <button
-            (click)="onEditTask(task)"
-            class="text-blue-600 hover:text-blue-800 cursor-pointer"
-          >
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="text-red-600 hover:text-red-800 cursor-pointer">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Content -->
-      <p class="text-gray-700 flex-grow">{{ task.description }}</p>
-
-      <!-- Footer -->
-      <div class="mt-4 flex items-center justify-between">
-        <span class="text-sm text-gray-500">
-          {{ task.createdAt | date : "dd/MM/yyyy HH:mm" }}
-        </span>
-        <label class="flex items-center gap-2 text-sm">
-          <input type="checkbox" [checked]="task.completed" />
-          Completa
-        </label>
+    Recargar Lista
+  </button>
+  <button
+    (click)="logout()"
+    class="min-w-[120px] flex items-center justify-center gap-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 cursor-pointer"
+  >
+    Desconectarse
+  </button>
+</div>
+<div
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+>
+  <!-- acá va la lista de tareas -->
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  @for (task of tasks.value(); track $index) {
+  <!-- ✅ Card de tarea -->
+  <div class="bg-white rounded shadow p-4 flex flex-col justify-between">
+    <!-- Header -->
+    <div class="flex justify-between items-start mb-2">
+      <h2 class="text-lg font-semibold truncate">{{ task.title }}</h2>
+      <div class="flex gap-2 ms-2">
+        <button
+          (click)="onEditTask(task)"
+          class="text-blue-600 hover:text-blue-800 cursor-pointer"
+        >
+          <i class="fas fa-edit"></i>
+        </button>
+        <button
+          (click)="confirmDeleteTask(task)"
+          class="text-red-600 hover:text-red-800 cursor-pointer"
+        >
+          <i class="fas fa-trash"></i>
+        </button>
       </div>
     </div>
-    } @empty {
-    <!-- ✅ Card vacía -->
-    <div class="bg-white rounded shadow p-4 text-center text-gray-500">
-      Aún no se creó ninguna tarea.
+
+    <!-- Content -->
+    <p class="text-gray-700 flex-grow">{{ task.description }}</p>
+
+    <!-- Footer -->
+    <div class="mt-4 flex items-center justify-between">
+      <span class="text-sm text-gray-500">
+        {{ task.createdAt | date : "dd/MM/yyyy HH:mm" }}
+      </span>
+      <label for="{{ task.id }}" class="flex items-center gap-2 text-sm">
+        <input
+          name="{{ task.id }}"
+          type="checkbox"
+          [checked]="task.completed"
+          (change)="changeTaskState(task)"
+          class="cursor-pointer"
+        />
+        Completa
+      </label>
     </div>
-    }
+  </div>
+  } @empty {
+  <!-- ✅ Card vacía -->
+  <div class="bg-white rounded shadow p-4 text-center text-gray-500">
+    Aún no se creó ninguna tarea.
   </div>
   }
 </div>
+}
+
 <app-loading-spinner [mostrar]="mostrarSpinner()" [texto]="textoSpinner()" />
+<app-confirm-delete-task
+  [open]="mostrarModal()"
+  [task]="selectedTask()!"
+  (confirm)="onConfirmDelete()"
+  (cancel)="onCancel()"
+/>

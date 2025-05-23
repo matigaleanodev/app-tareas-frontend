@@ -1,0 +1,32 @@
+@if(open()) {
+<div class="fixed inset-0 flex items-center justify-center z-50 bg-black/40">
+  <article
+    class="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm"
+    @fadeScale
+    tabindex="-1"
+  >
+    <h2 class="text-lg font-bold mb-4">¿Eliminar esta tarea?</h2>
+    <p class="text-sm text-gray-600">
+      Está por eliminar la tarea
+      <b> {{ task().title }} </b>
+    </p>
+    <p class="mb-6 text-sm text-gray-600">
+      Esta acción no se puede deshacer. ¿Está seguro que quiere eliminarla?
+    </p>
+    <footer class="flex justify-end gap-2">
+      <button
+        class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+        (click)="confirm.emit()"
+      >
+        Sí, eliminar
+      </button>
+      <button
+        class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+        (click)="cancel.emit()"
+      >
+        Cancelar
+      </button>
+    </footer>
+  </article>
+</div>
+}
