@@ -1,59 +1,66 @@
-# DesafioTecnico
+# Frontend - Gestor de Tareas
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+Aplicación web desarrollada con **Angular Standalone** para gestionar tareas asociadas a un usuario autenticado mediante token personalizado de Firebase. Consume la [API de tareas](https://github.com/matigaleanodev/api-tareas) como backend.
 
-## Development server
+## Requisitos
 
-To start a local development server, run:
+Asegurate de tener instalado lo siguiente:
 
-```bash
-ng serve
-```
+[![Node.js](https://img.shields.io/badge/Node.js-v22.x-brightgreen)](https://nodejs.org/)
+[![Angular](https://img.shields.io/badge/Angular-v19+-dd0031)](https://angular.io/)
+[![Firebase Web](https://img.shields.io/badge/Firebase-Web%20SDK-yellow)](https://firebase.google.com/docs/web/setup)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Instalación
 
-## Code scaffolding
+1. Clona el repositorio en tu máquina local:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+   ```bash
+   git clone https://github.com/matigaleanodev/app-tareas-frontend
+   cd app-tareas-frontend
+   ```
 
-```bash
-ng generate component component-name
-```
+2. Instala las dependencias:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+   ```bash
+   npm install
+   ```
 
-```bash
-ng generate --help
-```
+3. Configura el archivo `environment.ts` con tu API:
 
-## Building
+   `src/environments/environment.ts`:
 
-To build the project run:
+   ```ts
+   export const environment = {
+     API: "https://tu-api-url.com",
+   };
+   ```
 
-```bash
-ng build
-```
+## Desarrollo
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Para correr el proyecto en modo desarrollo:
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Tests
 
-## Additional Resources
+Para ejecutar los tests unitarios con Karma:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm test
+```
+
+Se abrirá el navegador y se ejecutarán los tests automáticamente. El reporte se puede ver en consola y también gráficamente.
+
+## Funcionalidades
+
+- ✅ Login con email (custom token de Firebase)
+- ✅ Listado, creación, edición y eliminación de tareas
+- ✅ Interfaz creada Angular Standalone y Tailwind
+- ✅ Protección de rutas según autenticación
+- ✅ Almacenamiento local del usuario
+
+---
+
+> Proyecto creado por [Matias Galeano](https://github.com/matigaleanodev) 🚀
