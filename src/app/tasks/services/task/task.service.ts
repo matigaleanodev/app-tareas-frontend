@@ -12,22 +12,22 @@ export class TaskService {
   private _api = environment.API;
 
   getAll(): Observable<Task[]> {
-    return this._http.get<Task[]>(this._api);
+    return this._http.get<Task[]>(`${this._api}/tasks`);
   }
 
-  getById(id: string): Observable<Task> {
-    return this._http.get<Task>(`${this._api}/${id}`);
+  getTaskById(id: string): Observable<Task> {
+    return this._http.get<Task>(`${this._api}/tasks/${id}`);
   }
 
-  create(task: Task): Observable<Task> {
-    return this._http.post<Task>(this._api, task);
+  createTask(task: Task): Observable<Task> {
+    return this._http.post<Task>(`${this._api}/tasks`, task);
   }
 
-  update(id: string, task: Partial<Task>): Observable<Task> {
-    return this._http.put<Task>(`${this._api}/${id}`, task);
+  updateTask(id: string, task: Partial<Task>): Observable<Task> {
+    return this._http.put<Task>(`${this._api}/tasks/${id}`, task);
   }
 
-  delete(id: string): Observable<Task> {
-    return this._http.delete<Task>(`${this._api}/${id}`);
+  deleteTask(id: string): Observable<Task> {
+    return this._http.delete<Task>(`${this._api}/tasks/${id}`);
   }
 }

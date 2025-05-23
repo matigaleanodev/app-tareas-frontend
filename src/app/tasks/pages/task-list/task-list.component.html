@@ -8,19 +8,19 @@
         <i class="fas fa-plus"></i>
         Crear tarea
       </button>
-      <a
-        routerLink="/login"
+      <button
+        (click)="logout()"
         class="min-w-[120px] flex items-center justify-center gap-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
       >
         <i class="fas fa-arrow-left"></i>
         Volver
-      </a>
+      </button>
     </div>
   </div>
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
   >
-    @for (task of tasks(); track $index) {
+    @for (task of tasks.value(); track $index) {
     <!-- ✅ Card de tarea -->
     <div class="bg-white rounded shadow p-4 flex flex-col justify-between">
       <!-- Header -->
@@ -58,3 +58,5 @@
     }
   </div>
 </div>
+
+<app-loading-spinner [mostrar]="mostrarSpinner()" [texto]="textoSpinner()" />
