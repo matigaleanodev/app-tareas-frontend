@@ -5,11 +5,10 @@ import {
   signOut,
   onAuthStateChanged,
   User,
-  UserCredential,
 } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
+import { from } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +17,7 @@ export class FirebaseService {
   private _firebaseApp = initializeApp(environment.firebaseConfig);
   private _auth = getAuth(this._firebaseApp);
 
-  signInWithCustomToken(token: string): Observable<UserCredential> {
+  signInWithCustomToken(token: string) {
     const cred = signInWithCustomToken(this._auth, token);
     return from(cred);
   }
